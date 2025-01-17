@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agendamento - Studio Arco</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
-   <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="form-container">
@@ -25,25 +25,25 @@
 
             <!-- Serviço Desejado -->
             <div class="mb-3">
-                <label for="servico" class="form-label">Serviço(s) desejado(s):</label>
+                <label class="form-label">Serviço(s) desejado(s):</label>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="design" name="servico" value="design">
+                    <input class="form-check-input" type="checkbox" id="design" name="servico" value="Design de sobrancelhas">
                     <label class="form-check-label" for="design">Design de sobrancelhas</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="design_henna" name="servico" value="design_henna">
+                    <input class="form-check-input" type="checkbox" id="design_henna" name="servico" value="Design com henna">
                     <label class="form-check-label" for="design_henna">Design com henna</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="micropigmentacao" name="servico" value="micropigmentacao">
+                    <input class="form-check-input" type="checkbox" id="micropigmentacao" name="servico" value="Micropigmentação">
                     <label class="form-check-label" for="micropigmentacao">Micropigmentação</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="retoque" name="servico" value="retoque">
+                    <input class="form-check-input" type="checkbox" id="retoque" name="servico" value="Retoque de micropigmentação">
                     <label class="form-check-label" for="retoque">Retoque de micropigmentação</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="outro" name="servico" value="outro">
+                    <input class="form-check-input" type="checkbox" id="outro" name="servico" value="Outro">
                     <label class="form-check-label" for="outro">Outro</label>
                 </div>
             </div>
@@ -73,38 +73,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script>
-      document.getElementById('agendamento-form').addEventListener('submit', function (e) {
-    e.preventDefault();
+        document.getElementById('agendar').addEventListener('click', function () {
+            const nome = document.getElementById('nome').value;
+            const telefone = document.getElementById('telefone').value;
+            const servicos = Array.from(document.querySelectorAll('input[name="servico"]:checked'))
+                .map(el => el.value).join(', ');
+            const data = document.getElementById('data').value;
+            const horario = document.getElementById('horario').value;
+            const observacoes = document.getElementById('observacoes').value;
 
-    const nome = document.getElementById('nome').value;
-    const telefone = document.getElementById('telefone').value;
-    const servicos = Array.from(document.querySelectorAll('input[name="servicos"]:checked')).map(el => el.value).join(', ');
-    const data = document.getElementById('data').value;
-    const horario = document.getElementById('horario').value;
-    const observacoes = document.getElementById('observacoes').value;
+            // Geração do PDF
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF();
+            pdf.text(`Comprovante de Agendamento - Studio Arco`, 10, 10);
+            pdf.text(`Nome: ${nome}`, 10, 20);
+            pdf.text(`Telefone: ${telefone}`, 10, 30);
+            pdf.text(`Serviços: ${servicos}`, 10, 40);
+            pdf.text(`Data: ${data}`, 10, 50);
+            pdf.text(`Horário: ${horario}`, 10, 60);
+            pdf.text(`Observações: ${observacoes || 'Nenhuma'}`, 10, 70);
+            pdf.save(`comprovante_agendamento.pdf`);
 
-    const pdf = new jsPDF();
-    pdf.text(`Comprovante de Agendamento - Studio Arco`, 10, 10);
-    pdf.text(`Nome: ${nome}`, 10, 20);
-    pdf.text(`Telefone: ${telefone}`, 10, 30);
-    pdf.text(`Serviços: ${servicos}`, 10, 40);
-    pdf.text(`Data: ${data}`, 10, 50);
-    pdf.text(`Horário: ${horario}`, 10, 60);
-    pdf.text(`Observações: ${observacoes || 'Nenhuma'}`, 10, 70);
+            // Criação da mensagem para WhatsApp
+            const mensagem = `Olá, segue o seu comprovante de agendamento.%0A%0ANome: ${nome}%0ATelefone: ${telefone}%0AServiços: ${servicos}%0AData: ${data}%0AHorário: ${horario}%0AObservações: ${observacoes || 'Nenhuma'}`;
+            const whatsappURL = `https://wa.me/92984737304?text=${mensagem}`;
 
-    // Gera o PDF no navegador
-    pdf.save(`comprovante_agendamento.pdf`);
-
-    // Criação da mensagem para WhatsApp
-    const mensagem = `Olá, segue o seu comprovante de agendamento.\n\nNome: ${nome}\nTelefone: ${telefone}\nServiços: ${servicos}\nData: ${data}\nHorário: ${horario}\nObservações: ${observacoes || 'Nenhuma'}`;
-
-    // Link para WhatsApp
-    const whatsappURL = `https://wa.me/92984737304?text=${encodeURIComponent(mensagem)}`;
-
-    // Abre o WhatsApp no navegador
-    window.open(whatsappURL, '_blank');
-});
-
+            // Abre o WhatsApp no navegador
+            window.open(whatsappURL, '_blank');
+        });
     </script>
 </body>
 </html>
