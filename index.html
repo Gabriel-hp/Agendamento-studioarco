@@ -73,42 +73,38 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script>
-        document.getElementById('agendar').addEventListener('click', function () {
-            const form = document.getElementById('agendamento-form');
-            const formData = new FormData(form);
+      document.getElementById('agendamento-form').addEventListener('submit', function (e) {
+    e.preventDefault();
 
-            const nome = formData.get('nome');
-            const telefone = formData.get('telefone');
-            const data = formData.get('data');
-            const horario = formData.get('horario');
-            const observacoes = formData.get('observacoes');
+    const nome = document.getElementById('nome').value;
+    const telefone = document.getElementById('telefone').value;
+    const servicos = Array.from(document.querySelectorAll('input[name="servicos"]:checked')).map(el => el.value).join(', ');
+    const data = document.getElementById('data').value;
+    const horario = document.getElementById('horario').value;
+    const observacoes = document.getElementById('observacoes').value;
 
-            let servicos = [];
-            form.querySelectorAll('input[name="servico"]:checked').forEach(input => {
-                servicos.push(input.nextElementSibling.innerText);
-            });
+    const pdf = new jsPDF();
+    pdf.text(`Comprovante de Agendamento - Studio Arco`, 10, 10);
+    pdf.text(`Nome: ${nome}`, 10, 20);
+    pdf.text(`Telefone: ${telefone}`, 10, 30);
+    pdf.text(`Serviços: ${servicos}`, 10, 40);
+    pdf.text(`Data: ${data}`, 10, 50);
+    pdf.text(`Horário: ${horario}`, 10, 60);
+    pdf.text(`Observações: ${observacoes || 'Nenhuma'}`, 10, 70);
 
-            const doc = new jspdf.jsPDF();
-            doc.text(`Agendamento - Studio Arco`, 10, 10);
-            doc.text(`Nome: ${nome}`, 10, 20);
-            doc.text(`Telefone: ${telefone}`, 10, 30);
-            doc.text(`Serviço(s): ${servicos.join(', ')}`, 10, 40);
-            doc.text(`Data: ${data}`, 10, 50);
-            doc.text(`Horário: ${horario}`, 10, 60);
-            doc.text(`Observações: ${observacoes}`, 10, 70);
+    // Gera o PDF no navegador
+    pdf.save(`comprovante_agendamento.pdf`);
 
-            const pdfBlob = doc.output('blob');
+    // Criação da mensagem para WhatsApp
+    const mensagem = `Olá, segue o seu comprovante de agendamento.\n\nNome: ${nome}\nTelefone: ${telefone}\nServiços: ${servicos}\nData: ${data}\nHorário: ${horario}\nObservações: ${observacoes || 'Nenhuma'}`;
 
-            const whatsappURL = `https://wa.me/92984737304?text=Olá, segue o seu comprovante de agendamento.`;
-            const formDataWhatsApp = new FormData();
-            formDataWhatsApp.append('file', pdfBlob, 'agendamento.pdf');
+    // Link para WhatsApp
+    const whatsappURL = `https://wa.me/92984737304?text=${encodeURIComponent(mensagem)}`;
 
-            fetch(whatsappURL, {
-                method: 'POST',
-                body: formDataWhatsApp
-            }).then(() => alert('Agendamento enviado via WhatsApp!'))
-              .catch(err => console.error('Erro ao enviar:', err));
-        });
+    // Abre o WhatsApp no navegador
+    window.open(whatsappURL, '_blank');
+});
+
     </script>
 </body>
 </html>
