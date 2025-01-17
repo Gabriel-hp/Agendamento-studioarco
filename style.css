@@ -23,3 +23,40 @@ body {
 .btn-custom:hover {
     background-color: #8C6D55;
 }
+
+.service-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.service-card:hover {
+    transform: scale(1.02);
+}
+
+.service-card img {
+    width: 100%;
+    height: auto;
+}
+
+.service-card-body {
+    padding: 15px;
+}
+
+.service-card-body h5 {
+    margin-bottom: 10px;
+    font-size: 1.25rem;
+}
+
+.service-card-body p {
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.form-check-input {
+    transform: scale(1.5);
+    margin-right: 10px;
+}

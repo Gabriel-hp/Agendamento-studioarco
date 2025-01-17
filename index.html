@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="form-container">
-        <h1>Agendamento - Studio Arco</h1>
+    <div class="container mt-4">
+        <h1 class="mb-4">Agendamento - Studio Arco</h1>
         <form id="agendamento-form">
             <!-- Nome Completo -->
             <div class="mb-3">
@@ -24,40 +24,97 @@
             </div>
 
             <!-- Serviço Desejado -->
-            <div class="mb-3">
+            <div class="mb-4">
                 <label class="form-label">Serviço(s) desejado(s):</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="design" name="servico" value="Design de sobrancelhas">
-                    <label class="form-check-label" for="design">Design de sobrancelhas</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="design_henna" name="servico" value="Design com henna">
-                    <label class="form-check-label" for="design_henna">Design com henna</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="micropigmentacao" name="servico" value="Micropigmentação">
-                    <label class="form-check-label" for="micropigmentacao">Micropigmentação</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="retoque" name="servico" value="Retoque de micropigmentação">
-                    <label class="form-check-label" for="retoque">Retoque de micropigmentação</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="outro" name="servico" value="Outro">
-                    <label class="form-check-label" for="outro">Outro</label>
+
+                <div class="row">
+                    <!-- Card 1 -->
+                    <div class="col-md-4">
+                        <div class="service-card">
+                            <img src="DESIGN-DE-SOBRANCELHA-2.jpg" alt="Design de Sobrancelhas">
+                            <div class="service-card-body">
+                                <h5>Design de Sobrancelhas</h5>
+                                <p>Realce sua beleza com um design exclusivo e profissional.</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="design" name="servico" value="Design de sobrancelhas">
+                                    <label class="form-check-label" for="design">Selecionar</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="col-md-4">
+                        <div class="service-card">
+                            <img src="henna.jpg" alt="Design com Henna">
+                            <div class="service-card-body">
+                                <h5>Design com Henna</h5>
+                                <p>Perfeito para um look mais marcante e duradouro.</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="design_henna" name="servico" value="Design com henna">
+                                    <label class="form-check-label" for="design_henna">Selecionar</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="col-md-4">
+                        <div class="service-card">
+                            <img src="micropigmentacao.jpg" alt="Micropigmentação">
+                            <div class="service-card-body">
+                                <h5>Micropigmentação</h5>
+                                <p>Resultado incrível e natural para suas sobrancelhas.</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="micropigmentacao" name="servico" value="Micropigmentação">
+                                    <label class="form-check-label" for="micropigmentacao">Selecionar</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="col-md-4">
+                        <div class="service-card">
+                            <img src="reto.jpg" alt="Retoque de Micropigmentação">
+                            <div class="service-card-body">
+                                <h5>Retoque de Micropigmentação</h5>
+                                <p>Garanta a perfeição com um retoque profissional.</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="retoque" name="servico" value="Retoque de micropigmentação">
+                                    <label class="form-check-label" for="retoque">Selecionar</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="col-md-4">
+                        <div class="service-card">
+                            <img src="limpeza-de-sobrancelhas.jpg" alt="Outro">
+                            <div class="service-card-body">
+                                <h5>Outro</h5>
+                                <p>Tem outro serviço em mente? Selecione aqui.</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="outro" name="servico" value="Outro">
+                                    <label class="form-check-label" for="outro">Selecionar</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Data e Horário -->
-            <div class="mb-3">
-                <label for="data" class="form-label">Data desejada:</label>
-                <input type="date" class="form-control" id="data" name="data" required>
-            </div>
+         <!-- Data e Horário -->
+        <div class="mb-3">
+            <label for="data" class="form-label">Data desejada:</label>
+            <input type="date" class="form-control" id="data" name="data" required>
+        </div>
 
-            <div class="mb-3">
-                <label for="horario" class="form-label">Horário desejado:</label>
-                <input type="time" class="form-control" id="horario" name="horario" required>
-            </div>
+        <div class="mb-3">
+            <label for="horario" class="form-label">Horário desejado:</label>
+            <input type="time" class="form-control" id="horario" name="horario" required>
+        </div>
 
             <!-- Observações -->
             <div class="mb-3">
@@ -101,6 +158,25 @@
             // Abre o WhatsApp no navegador
             window.open(whatsappURL, '_blank');
         });
-    </script>
+
+
+          // Bloquear datas passadas
+            const dataInput = document.getElementById('data');
+            const hoje = new Date().toISOString().split('T')[0];
+            dataInput.setAttribute('min', hoje);
+
+            // Validação de horário
+            const horarioInput = document.getElementById('horario');
+            horarioInput.addEventListener('input', () => {
+                const horarioSelecionado = horarioInput.value;
+                const horaMin = '08:00';
+                const horaMax = '18:00';
+
+                if (horarioSelecionado < horaMin || horarioSelecionado > horaMax) {
+                    alert('Por favor, selecione um horário dentro do expediente (08:00 às 18:00).');
+                    horarioInput.value = '';
+                }
+            });
+            </script>
 </body>
 </html>
