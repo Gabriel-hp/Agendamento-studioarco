@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamento - Studio Arco</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+   <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Agendamento - Studio Arco</h1>
+        <form id="agendamento-form">
+            <!-- Nome Completo -->
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome completo:</label>
+                <input type="text" class="form-control" id="nome" name="nome" required placeholder="Digite seu nome completo">
+            </div>
+
+            <!-- Telefone com WhatsApp -->
+            <div class="mb-3">
+                <label for="telefone" class="form-label">Número de telefone (WhatsApp):</label>
+                <input type="tel" class="form-control" id="telefone" name="telefone" required placeholder="(XX) XXXXX-XXXX">
+            </div>
+
+            <!-- Serviço Desejado -->
+            <div class="mb-3">
+                <label for="servico" class="form-label">Serviço(s) desejado(s):</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="design" name="servico" value="design">
+                    <label class="form-check-label" for="design">Design de sobrancelhas</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="design_henna" name="servico" value="design_henna">
+                    <label class="form-check-label" for="design_henna">Design com henna</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="micropigmentacao" name="servico" value="micropigmentacao">
+                    <label class="form-check-label" for="micropigmentacao">Micropigmentação</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="retoque" name="servico" value="retoque">
+                    <label class="form-check-label" for="retoque">Retoque de micropigmentação</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="outro" name="servico" value="outro">
+                    <label class="form-check-label" for="outro">Outro</label>
+                </div>
+            </div>
+
+            <!-- Data e Horário -->
+            <div class="mb-3">
+                <label for="data" class="form-label">Data desejada:</label>
+                <input type="date" class="form-control" id="data" name="data" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="horario" class="form-label">Horário desejado:</label>
+                <input type="time" class="form-control" id="horario" name="horario" required>
+            </div>
+
+            <!-- Observações -->
+            <div class="mb-3">
+                <label for="observacoes" class="form-label">Deseja deixar alguma observação?</label>
+                <textarea class="form-control" id="observacoes" name="observacoes" rows="3" placeholder="Deixe sua observação aqui..."></textarea>
+            </div>
+
+            <!-- Botão de Enviar -->
+            <button type="button" class="btn btn-custom w-100" id="agendar">Agendar</button>
+        </form>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script>
+        document.getElementById('agendar').addEventListener('click', function () {
+            const form = document.getElementById('agendamento-form');
+            const formData = new FormData(form);
+
+            const nome = formData.get('nome');
+            const telefone = formData.get('telefone');
+            const data = formData.get('data');
+            const horario = formData.get('horario');
+            const observacoes = formData.get('observacoes');
+
+            let servicos = [];
+            form.querySelectorAll('input[name="servico"]:checked').forEach(input => {
+                servicos.push(input.nextElementSibling.innerText);
+            });
+
+            const doc = new jspdf.jsPDF();
+            doc.text(`Agendamento - Studio Arco`, 10, 10);
+            doc.text(`Nome: ${nome}`, 10, 20);
+            doc.text(`Telefone: ${telefone}`, 10, 30);
+            doc.text(`Serviço(s): ${servicos.join(', ')}`, 10, 40);
+            doc.text(`Data: ${data}`, 10, 50);
+            doc.text(`Horário: ${horario}`, 10, 60);
+            doc.text(`Observações: ${observacoes}`, 10, 70);
+
+            const pdfBlob = doc.output('blob');
+
+            const whatsappURL = `https://wa.me/92984737304?text=Olá, segue o seu comprovante de agendamento.`;
+            const formDataWhatsApp = new FormData();
+            formDataWhatsApp.append('file', pdfBlob, 'agendamento.pdf');
+
+            fetch(whatsappURL, {
+                method: 'POST',
+                body: formDataWhatsApp
+            }).then(() => alert('Agendamento enviado via WhatsApp!'))
+              .catch(err => console.error('Erro ao enviar:', err));
+        });
+    </script>
+</body>
+</html>
